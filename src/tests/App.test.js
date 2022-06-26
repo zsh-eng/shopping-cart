@@ -10,6 +10,14 @@ jest.mock("../Nav", () => ({ onCartClick }) => (
 
 describe("App component", () => {
 	it("Shows shopping cart upon click", () => {
+		const testItem = {
+			image: "",
+			name: "Fossil Express",
+			price: 450,
+			quantity: 1
+		}
+		const products = [testItem]
+
 		render(<App />)
 
 		const cartButton = screen.getByRole("button")

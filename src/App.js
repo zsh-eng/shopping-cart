@@ -4,7 +4,7 @@ import Nav from "./Nav"
 import Cart from "./Cart"
 
 const App = ({ products, changeQty }) => {
-	const [cartVisible, setVisibility] = useState(true)
+	const [cartVisible, setVisibility] = useState(false)
 
 	const changeVisibility = () => setVisibility(cartVisible ? false : true)
 
