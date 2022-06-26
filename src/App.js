@@ -1,19 +1,21 @@
 import { Outlet } from "react-router-dom"
-import React, { useState } from 'react';
+import React, { useState } from "react"
 import Nav from "./Nav"
-import Cart from "./Cart";
+import Cart from "./Cart"
 
-const App = () => {
-	const [cartVisible, setVisibility] = useState(false)
+const App = ({ products, changeQty }) => {
+	const [cartVisible, setVisibility] = useState(true)
 
 	const changeVisibility = () => setVisibility(cartVisible ? false : true)
 
-	let cart = cartVisible ? <Cart /> : null
+	let cartComponent = cartVisible ? (
+		<Cart products={products} onCloseCart={() => changeVisibility()} changeQty={(itemName, n) => changeQty(itemName, n)}/>
+	) : null
 	return (
 		<div className="App flex flex-col h-full">
 			<Nav onCartClick={() => changeVisibility()} />
 			<Outlet />
-			{cart}
+			{cartComponent}
 		</div>
 	)
 }

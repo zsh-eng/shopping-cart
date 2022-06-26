@@ -1,6 +1,5 @@
-import React, { useState } from "react"
+import React from "react"
 import { Link } from "react-router-dom"
-import Cart from "./Cart"
 
 const NavLink = ({ text }) => {
 	const listItemClasses =
