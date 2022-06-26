@@ -1,25 +1,27 @@
-import React from "react"
 import { render, screen } from "@testing-library/react"
 import "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event"
 import { BrowserRouter } from "react-router-dom"
-import Nav from "../Nav"
+import App from "../App"
 import Home from "../Home"
 import ShopItem from "../ShopItem"
 
-describe("Nav Component", () => {
-	it("renders navbar correctly", () => {
-		render(
-			<BrowserRouter>
-				<Nav />
-			</BrowserRouter>
-		)
+jest.mock("../Cart", () => () => <div data-testid="shopping-cart"></div>)
+jest.mock("../Nav", () => ({ onCartClick }) => (
+	<button onClick={() => onCartClick()}></button>
+))
 
-		expect(screen.getByRole("heading")).toHaveTextContent(/timeless/i)
-		expect(screen.getAllByRole("listitem").length).toBe(3)
-		expect(screen.getAllByRole("listitem")[0]).toHaveTextContent(/home/i)
-		expect(screen.getAllByRole("listitem")[1]).toHaveTextContent(/shop/i)
-		expect(screen.getAllByRole("listitem")[2]).toHaveTextContent(/cart/i)
+describe("App component", () => {
+	it("Shows shopping cart upon click", () => {
+		render(<App />)
+
+		const cartButton = screen.getByRole("button")
+
+		expect(screen.queryByTestId("shopping-cart")).toBeNull()
+		userEvent.click(cartButton)
+		expect(screen.getAllByTestId("shopping-cart").length).toBe(1)
+		userEvent.click(cartButton)
+		expect(screen.queryByTestId("shopping-cart")).toBeNull()
 	})
 })
 
@@ -58,6 +60,7 @@ describe("ShopItem Component", () => {
 		const button = screen.getByRole("button")
 		userEvent.click(button)
 		expect(onclick).toBeCalled()
+		expect(onclick).toBeCalledWith("Fossil Express")
 
 		userEvent.click(button)
 		expect(onclick).toBeCalledTimes(2)

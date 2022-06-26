@@ -1,5 +1,6 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
+import Cart from "./Cart"
 
 const NavLink = ({ text }) => {
 	const listItemClasses =
@@ -13,7 +14,7 @@ const NavLink = ({ text }) => {
 	)
 }
 
-const Nav = () => {
+const Nav = ({ onCartClick }) => {
 	return (
 		<nav className="flex justify-between px-16 pt-8 align-center">
 			<h1 className="text-5xl font-serif tracking-tighter">Timeless</h1>
@@ -24,7 +25,11 @@ const Nav = () => {
 				<Link to="shop">
 					<NavLink text="Shop" />
 				</Link>
-				<NavLink text="Cart" />
+				<div>
+					<button onClick={() => onCartClick()}>
+						<NavLink text="Cart" />
+					</button>
+				</div>
 			</ul>
 		</nav>
 	)
