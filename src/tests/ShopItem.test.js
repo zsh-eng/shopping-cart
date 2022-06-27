@@ -27,7 +27,6 @@ describe("ShopItem Component", () => {
 		const button = screen.getByRole("button")
 		userEvent.click(button)
 		expect(onclick).toBeCalled()
-		expect(onclick).toBeCalledWith("Fossil Express")
 
 		userEvent.click(button)
 		expect(onclick).toBeCalledTimes(2)

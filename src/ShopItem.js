@@ -4,7 +4,7 @@ const ShopItem = ({ image, name, price, addToCart }) => {
 	return (
 		<div className="relative w-72 h-96 border-b-4 border-gray-400 shadow-lg flex flex-col group">
 			<button
-				onClick={() => addToCart(name)}
+				onClick={() => addToCart()}
 				className="transition-all ease-in opacity-0 group-hover:opacity-100 absolute inset-0 bg-gray-500/50 text-2xl text-white font-bold"
 			>
 				Add to Cart

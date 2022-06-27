@@ -1,10 +1,11 @@
-import { render, screen } from "@testing-library/react"
+import { getAllByRole, render, screen } from "@testing-library/react"
 import "@testing-library/jest-dom"
+import userEvent from "@testing-library/user-event"
 import Shop from "../Shop"
 
 jest.mock("../ShopItem", () => ({ name, price, image, addToCart }) => (
 	<div data-testid="shop-item">
-		<button onClick={addToCart}></button>
+		<button onClick={() => addToCart()}></button>
 		<img src={image} alt="" />
 		<div>{name}</div>
 		<div>{price}</div>
@@ -24,6 +25,16 @@ describe("Shop Component", () => {
 	})
 
 	it("passes addToCart call up the chain", () => {
-		render(<Shop products={products} />)
+		const addCartMock = jest.fn()
+		render(<Shop products={products} addToCart={addCartMock} />)
+
+		const [btn1, btn2, btn3] = screen.getAllByRole("button")
+		userEvent.click(btn1)
+		expect(addCartMock).toBeCalled()
+		expect(addCartMock).toBeCalledWith("Fire")
+
+		userEvent.click(btn2)
+		expect(addCartMock).toBeCalledTimes(2)
+		expect(addCartMock).toBeCalledWith("Earth")
 	})
 })

@@ -19,8 +19,8 @@ import rolex2 from "./assets/rolex_submariner_ref5513_11000.jpg"
 import timex from "./assets/timex_weekender_45.jpg"
 import universal from "./assets/universal_geneve_polerouter_1200.jpg"
 
-const products = [
-	{ image: fossil, name: "Fossil XL-598", price: 280, quantity: 3 },
+const allProducts = [
+	{ image: fossil, name: "Fossil XL-598", price: 280, quantity: 1 },
 	{ image: apple, name: "Apple Watch Series 6", price: 399, quantity: 1 },
 	{ image: cartier, name: "Cartier Tank", price: 2410, quantity: 1 },
 	{ image: seiko1, name: "Grand Seiko Snowflake", price: 5800, quantity: 1 },
@@ -56,13 +56,20 @@ const products = [
 ]
 
 function RouteSwitch() {
-	const [cart, setCart] = useState(products)
+	const [cart, setCart] = useState([])
 
 	const changeQty = (itemName, n) => {
 		const newCart = [...cart]
 
 		const index = newCart.findIndex((el) => el.name === itemName)
+
 		if (index === -1) {
+			// If item doesn't yet exist in cart, add it
+			if (n > 0) {
+				newCart.push(allProducts.find(({ name }) => name === itemName))
+				setCart(newCart)
+			}
+
 			return
 		}
 
@@ -93,7 +100,15 @@ function RouteSwitch() {
 					}
 				>
 					<Route index element={<Home />} />
-					<Route path="shop" element={<Shop products={cart} />} />
+					<Route
+						path="shop"
+						element={
+							<Shop
+								products={allProducts}
+								addToCart={(name) => changeQty(name, 1)}
+							/>
+						}
+					/>
 				</Route>
 			</Routes>
 		</BrowserRouter>
