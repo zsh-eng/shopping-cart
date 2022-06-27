@@ -12,7 +12,7 @@ const App = ({ products, changeQty }) => {
 		<Cart products={products} onCloseCart={() => changeVisibility()} changeQty={(itemName, n) => changeQty(itemName, n)}/>
 	) : null
 	return (
-		<div className="App flex flex-col h-full">
+		<div className="App flex flex-col h-full scroll-smooth">
 			<Nav onCartClick={() => changeVisibility()} />
 			<Outlet />
 			{cartComponent}
